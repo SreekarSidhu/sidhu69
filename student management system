@@ -1,0 +1,85 @@
+import java.util.Scanner;
+
+public class StudentManagementSystem {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Student[] students = new Student[10];  // Adjust the size as needed
+
+        int choice;
+        do {
+            System.out.println("Student Management System Menu:");
+            System.out.println("1. Add Student");
+            System.out.println("2. Display Students");
+            System.out.println("3. Search Student");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();  // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter student name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter student roll number: ");
+                    int rollNumber = scanner.nextInt();
+                    students[Student.getCount()] = new Student(name, rollNumber);
+                    break;
+                case 2:
+                    System.out.println("\nStudent List:");
+                    for (int i = 0; i < Student.getCount(); i++) {
+                        System.out.println(students[i]);
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter roll number to search: ");
+                    int searchRollNumber = scanner.nextInt();
+                    boolean found = false;
+                    for (int i = 0; i < Student.getCount(); i++) {
+                        if (students[i].getRollNumber() == searchRollNumber) {
+                            System.out.println("Student found: " + students[i]);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("Student not found.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Exiting Student Management System. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+
+        } while (choice != 4);
+
+        scanner.close();
+    }
+}
+
+class Student {
+    private static int count = 0;
+    private String name;
+    private int rollNumber;
+
+    public Student(String name, int rollNumber) {
+        this.name = name;
+        this.rollNumber = rollNumber;
+        count++;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+    public int getRollNumber() {
+        return rollNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Roll Number: " + rollNumber + ", Name: " + name;
+    }
+}
