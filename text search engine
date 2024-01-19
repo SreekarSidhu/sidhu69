@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class TextSearchEngine {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the text: ");
+        String text = scanner.nextLine();
+
+        System.out.print("Enter the search pattern: ");
+        String pattern = scanner.nextLine();
+
+        List<Integer> occurrences = search(text, pattern);
+
+        if (occurrences.isEmpty()) {
+            System.out.println("Pattern not found in the text.");
+        } else {
+            System.out.println("Pattern found at positions: " + occurrences);
+        }
+
+        scanner.close();
+    }
+
+    private static List<Integer> search(String text, String pattern) {
+        List<Integer> occurrences = new ArrayList<>();
+
+        int textLength = text.length();
+        int patternLength = pattern.length();
+
+        for (int i = 0; i <= textLength - patternLength; i++) {
+            int j;
+
+            // Check for a match at the current position
+            for (j = 0; j < patternLength; j++) {
+                if (text.charAt(i + j) != pattern.charAt(j)) {
+                    break;
+                }
+            }
+
+            // If the inner loop completed without breaking, a match is found
+            if (j == patternLength) {
+                occurrences.add(i);
+            }
+        }
+
+        return occurrences;
+    }
+}
